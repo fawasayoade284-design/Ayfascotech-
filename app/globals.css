@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/[0.045] border border-[rgba(140,170,255,0.14)] rounded-xl2 backdrop-blur-md;
+  }
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold text-sm text-white
+           bg-gradient-to-r from-royal to-emerald
+           shadow-[0_8px_24px_-8px_rgba(47,92,255,0.6)]
+           hover:-translate-y-0.5 transition-transform;
+  }
+  .btn-ghost {
+    @apply px-6 py-3 rounded-xl font-semibold text-sm glass-card
+           hover:border-cyan hover:-translate-y-0.5 transition-all;
+  }
+  .pill {
+    @apply px-4 py-2 rounded-full text-xs font-mono glass-card text-ink-dim;
+  }
+}
+
+/* subtle animated background grid, same as the marketing mockup */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(140, 170, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 170, 255, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
