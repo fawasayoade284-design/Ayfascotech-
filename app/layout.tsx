@@ -7,7 +7,11 @@ import { createClient } from "@/lib/supabase/server";
 // falling back to sensible defaults if the settings row hasn't been set yet.
 export async function generateMetadata(): Promise<Metadata> {
   const supabase = await createClient();
-  const { data } = await supabase.from("site_settings").select("value").eq("key", "seo").single();
+  const { data } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", "seo")
+    .single();
 
   const seo = data?.value ?? {
     site_title: "AyfascoTech — Full-Stack Developer & Web Designer",
@@ -19,13 +23,20 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: seo.site_title,
     description: seo.site_description,
-    metadataBase: new URL("https://ayfascotech.com"),
+
+    metadataBase: new URL("https://ayfascotech.vercel.app"),
+
+    verification: {
+      google: "pchsZEr_9kiKR7Vfevgvfl7tw14DKQZdnk8lpP6LWgE",
+    },
+
     openGraph: {
       title: seo.site_title,
       description: seo.site_description,
       type: "website",
       images: seo.og_image_url ? [seo.og_image_url] : [],
     },
+
     twitter: {
       card: "summary_large_image",
       title: seo.site_title,
@@ -46,6 +57,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+
       <body className="bg-navy text-ink font-body antialiased">
         {children}
       </body>
