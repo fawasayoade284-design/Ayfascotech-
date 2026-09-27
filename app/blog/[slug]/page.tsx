@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const revalidate = 60;
 
 async function getPost(slug: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from("blog_posts")
     .select("*, blog_categories(name, slug)")
@@ -17,8 +17,8 @@ async function getPost(slug: string) {
   return data;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPost(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const post = await getPost((await params).slug);
   if (!post) return {};
   return {
     title: `${post.title} — AyfascoTech Blog`,
@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const post = await getPost((await params).slug);
   if (!post) notFound();
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: related } = await supabase
     .from("blog_posts")
     .select("title, slug, excerpt")

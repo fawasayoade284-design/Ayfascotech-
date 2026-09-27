@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminOverview() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [{ count: projects }, { count: services }, { count: testimonials }, { count: unread }] = await Promise.all([
     supabase.from("projects").select("*", { count: "exact", head: true }),

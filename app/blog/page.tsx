@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 export const revalidate = 60;
 
 export default async function BlogIndexPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: posts } = await supabase
     .from("blog_posts")
     .select("*, blog_categories(name)")

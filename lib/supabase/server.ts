@@ -4,8 +4,8 @@ import { cookies } from "next/headers";
 // Used inside Server Components, Route Handlers, and Server Actions.
 // Reads/writes the auth session via cookies so the user stays logged in
 // across requests.
-export function createClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -4,7 +4,7 @@ import ContactForm from "@/components/ContactForm";
 export const revalidate = 60; // re-fetch content from Supabase every 60s
 
 export default async function HomePage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const [{ data: services }, { data: projects }, { data: testimonials }, { data: plans }, { data: settingsRows }] =
     await Promise.all([

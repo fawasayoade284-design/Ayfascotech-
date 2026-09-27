@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 // this reads whatever's currently saved in Supabase on every request,
 // falling back to sensible defaults if the settings row hasn't been set yet.
 export async function generateMetadata(): Promise<Metadata> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data } = await supabase.from("site_settings").select("value").eq("key", "seo").single();
 
   const seo = data?.value ?? {
